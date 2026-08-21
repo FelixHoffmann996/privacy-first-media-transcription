@@ -1,0 +1,23 @@
+{
+  "name": "privacy-first-media-transcription",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/transcription_service.ts",
+    "demo": "tsx scripts/run_creator_delivery.ts",
+    "test": "tsx --test test/creator_delivery.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "openai": "^5.12.2",
+    "zod": "^4.0.17"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

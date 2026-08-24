@@ -16,7 +16,7 @@ export AUDIO_BASE64="$(base64 < sample.wav | tr -d '\n')"
 npm run demo
 ```
 
-The script creates `asset-demo-01`, uploads sequence `0`, and starts `job-demo-01`. A recording without clinical language gives you this shape:
+The script creates `asset-demo-01`, uploads sequence `0`, and starts `job-demo-01`. A recording without clinical language comes back in this shape:
 
 ```json
 {
@@ -28,15 +28,15 @@ The script creates `asset-demo-01`, uploads sequence `0`, and starts `job-demo-0
 }
 ```
 
-Clients can send more chunks with increasing `sequence` values before making the job. Repeating a chunk sequence won't append it twice. Repeating a `jobId` returns the recorded job, and the same value goes in as the AI request's idempotency key.
+Clients can send more chunks with increasing `sequence` values before creating the job. Repeating a chunk sequence won't append it twice. Repeating a `jobId` returns the recorded job, and the same value is passed as the AI request's idempotency key.
 
 ## Privacy boundary
 
-The example holds audio and transcripts in process memory. Restart the service and they're gone. Put auth, encryption, retention, and durable storage at the boundary your environment needs before touching health data.
+The example holds audio and transcripts in process memory. Restarting the service clears them. Put auth, encryption, retention, and durable storage at the boundary your environment needs before touching health data.
 
-The one real gotcha is ordering: every sequence from zero to the final chunk has to land before the job starts. The service decodes each base64 chunk, joins the bytes in sequence order, and encodes the full audio for transcription.
+The real gotcha is ordering: every sequence from zero through the final chunk must land before the job starts. The service decodes each base64 chunk, joins the bytes in sequence order, and encodes the full audio for transcription.
 
-Clinical terms like `patient`, `medication`, and `treatment` hold a transcript for review. That's a small deterministic policy for the example, not a clinical classifier.
+Clinical terms like `patient`, `medication`, and `treatment` hold a transcript for review. That's a small deterministic policy for the demo, not a clinical classifier.
 
 ## Verify the decision
 
